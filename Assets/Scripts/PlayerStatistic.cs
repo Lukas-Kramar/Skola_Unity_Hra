@@ -6,33 +6,60 @@ using UnityEngine;
 public class PlayerStatistic : MonoBehaviour
 {
     [SerializeField]
-    private int MaxHealth = 100;
-    [SerializeField]
+    private int MaxHealth = 100;    
     private int health;
 
-    public HealthBar healthBar;
+    [SerializeField]
+    private int MaxShield = 100;    
+    private int shield;
+
+    public Healt_Bar_Shield_Bar_Controller healthShieldController;
+
     // Start is called before the first frame update
     void Start()
     {
         health = MaxHealth;
-        healthBar.SetMaxHealth(health);
+        shield = MaxShield;
+        healthShieldController.SetMaxHealth(health);
+        healthShieldController.SetMaxShield(shield);
     }
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        healthBar.SetHealth(health);
-        //gameObject.transform.position = new Vector3(gameObject.transform.position.x - 5, gameObject.transform.position.y, gameObject.transform.position.z);
-        if(health <= 0)
+        //Logick if has shields
+        int healthDmg = 0;
+        if (shield > 0)
         {
-            Debug.Log("Chcipnul si");
+            if (shield - damage > 0) shield -= damage;
+            else
+            {
+                shield = 0;
+                healthDmg = damage - shield;
+            }
+        }
+        else healthDmg = damage;
+
+        //Update UI
+        health -= healthDmg;
+        healthShieldController.SetHealth(health);
+        healthShieldController.SetShield(shield);
+
+        if (health <= 0)
+        {
+            Debug.Log("Um?el si");
         }
     }
 
-    public void TakeMeds(int heal)
+    public void Heal(int heal)
     {        
         health += heal;
         if(health > MaxHealth) health = MaxHealth;
-        healthBar.SetHealth(health);
+        healthShieldController.SetHealth(health);
+    }
+    public void PowerShield(int powerShield)
+    {
+        shield += powerShield;
+        if (shield > MaxShield) shield = MaxShield;
+        healthShieldController.SetShield(shield);
     }
 }

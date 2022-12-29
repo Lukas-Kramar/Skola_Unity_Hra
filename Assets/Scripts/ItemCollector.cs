@@ -5,14 +5,21 @@ using UnityEngine;
 
 public class ItemCollector : MonoBehaviour
 {
-    public PlayerStatistic player;
+    private Player _player;
+    private PlayerStatistic _statistic;
+    private void Start()
+    {
+        _player = GetComponent<Player>();
+        _statistic = GetComponent<PlayerStatistic>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Console.WriteLine(collision.gameObject.tag);
-        if(collision.CompareTag("Meds"))
+        Console.WriteLine("Trigger Collision: " + collision.gameObject.tag);
+        if (collision.CompareTag("Meds"))
         {
             Destroy(collision.gameObject);
-            player.TakeMeds(30);
+            _statistic.Heal(30);
         }
     }
+
 }

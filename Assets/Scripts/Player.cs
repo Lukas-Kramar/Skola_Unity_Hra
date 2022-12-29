@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _obstacklesLayer;
 
 
     private void Start()
@@ -73,7 +74,9 @@ public class Player : MonoBehaviour
     }
     private bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _groundLayer);
+        var grounded = false;
+        if (Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _groundLayer) || Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _obstacklesLayer)) grounded = true;
+        return grounded;
     }
 
     public void Knockback(Transform t)
@@ -81,12 +84,7 @@ public class Player : MonoBehaviour
         var dir = _center.position - t.position;
         _knockbacked = true;
         _rigidbody2D.velocity = dir.normalized * _knockbackVelocity;
-        //foreach (var spriteRenderer in _spriteRenderers)
-        //{
-        //    spriteRenderer.color = Color.red;
-        //}
-
-        //StartCoroutine(FadeToWhite());
+        
         StartCoroutine(UnKnockback());
     }
 

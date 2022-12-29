@@ -8,7 +8,10 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField]
     private int health = 100;
     [SerializeField]
-    public int speed = 5;
+    public int speed = 300;
+
+    [SerializeField]
+    public int chaseDistance;
 
     [SerializeField]
     private GameObject deathEffect;    
@@ -17,26 +20,19 @@ public class BasicEnemy : MonoBehaviour
     private float StartDazeTime;
 
     [SerializeField]
-    private SimpleFlash simpleFlash;
-
-    [SerializeField]
-    private int DamageToPlayer = 5;
-
-    [SerializeField]
-    public PlayerStatistic playerStatistic;
-
-    private Rigidbody2D _rigidBody2D;
+    private SimpleFlash simpleFlash;    
+    private int _speedy;
 
     private void Start()
     {
-        _rigidBody2D = GetComponent<Rigidbody2D>();
+        _speedy = speed;
     }
 
     private void Update()
     {
         if(dazedTime <= 0)
         {
-            speed = 5;
+            speed = _speedy;
         }
         else
         {
@@ -64,16 +60,5 @@ public class BasicEnemy : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = Color.red;        
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
-    }
-
-    
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.name == "Player")
-        {
-            _rigidBody2D.velocity = new Vector2(0f, 0f);
-            playerStatistic.TakeDamage(DamageToPlayer);
-        }
     }
 }

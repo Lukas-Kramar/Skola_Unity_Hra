@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Meds
+  - Spikes
+  - BasicEnemy
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Obstackles
   - 
   - 
   - 

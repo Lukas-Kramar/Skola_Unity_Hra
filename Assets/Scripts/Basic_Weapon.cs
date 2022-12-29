@@ -7,6 +7,7 @@ using UnityEngine;
 public class Basic_Weapon : MonoBehaviour
 {
     public Transform firePoint;
+    public Transform firePointTop;
     public GameObject bulletPrefab;
     // Start is called before the first frame update
     void Start()
@@ -19,13 +20,18 @@ public class Basic_Weapon : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            if (Input.GetKeyDown("W")) ShootUp();
+            else Shoot();
         }
-        
+                
     }
 
     void Shoot()
     {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+    }
+    void ShootUp()
+    {
+        Instantiate(bulletPrefab, firePointTop.position, firePointTop.rotation);
     }
 }
