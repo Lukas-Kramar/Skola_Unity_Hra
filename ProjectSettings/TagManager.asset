@@ -7,22 +7,30 @@ TagManager:
   - Meds
   - Spikes
   - BasicEnemy
+  - PlayerProjectile
+  - Character
+  - Barrel
+  - DeathScreen
+  - Grenade
+  - Wall
+  - VolumeSlider
+  - DiffDrop
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Characters
   - Water
   - UI
   - Ground
   - 
   - 
   - 
+  - Projectiles
   - 
   - 
   - 
-  - 
-  - 
+  - InteractableEnviroment
   - Obstackles
   - 
   - 

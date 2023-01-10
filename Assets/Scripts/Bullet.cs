@@ -4,27 +4,35 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 20f;
-    [SerializeField]
     private Rigidbody2D rb;
-    [SerializeField]
-    private int damage = 40;
-    // Start is called before the first frame update
+    private Basic_Weapon basic_Weapon;
     void Start()
     {
-        rb.velocity = transform.right * speed;
+        GameObject player = GameObject.FindWithTag("Player");
+        basic_Weapon = player.GetComponent<Basic_Weapon>();
+
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * basic_Weapon.bulletSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.name);
-        BasicEnemy enemy =  collision.GetComponent<BasicEnemy>();
+        WalkingEnemy enemy = collision.GetComponent<WalkingEnemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(basic_Weapon.bulletDMG);
+        }
+        FlyingEnemy flyingEnemy = collision.GetComponent<FlyingEnemy>();
+        if (flyingEnemy != null)
+        {
+            flyingEnemy.TakeDamage(basic_Weapon.bulletDMG);
+        }
+        PykeEnemy pykeEnemy = collision.GetComponent<PykeEnemy>();
+        if (pykeEnemy != null)
+        {
+            pykeEnemy.TakeDamage(basic_Weapon.bulletDMG);
         }
         Destroy(gameObject);
-        //Debug.Log(collision.name);
     }
 }

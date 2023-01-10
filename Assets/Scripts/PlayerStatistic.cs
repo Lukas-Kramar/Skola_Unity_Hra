@@ -13,6 +13,9 @@ public class PlayerStatistic : MonoBehaviour
     private int MaxShield = 100;    
     private int shield;
 
+    public int numberOfGrenades = 3;
+    public GameObject DeathScreen;
+    private Player Player;
     public Healt_Bar_Shield_Bar_Controller healthShieldController;
 
     // Start is called before the first frame update
@@ -22,6 +25,9 @@ public class PlayerStatistic : MonoBehaviour
         shield = MaxShield;
         healthShieldController.SetMaxHealth(health);
         healthShieldController.SetMaxShield(shield);
+
+        DeathScreen = GameObject.FindWithTag("DeathScreen");
+        DeathScreen.SetActive(false);
     }
 
     public void TakeDamage(int damage)
@@ -46,7 +52,9 @@ public class PlayerStatistic : MonoBehaviour
 
         if (health <= 0)
         {
-            Debug.Log("Um?el si");
+            DeathScreen.SetActive(true);
+            gameObject.SetActive(false);
+            
         }
     }
 

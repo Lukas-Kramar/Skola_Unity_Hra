@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     private float horizontal;
     private float speed = 8f;
-    private float jumpingPower = 20f;
+    private float jumpingPower = 22f;
     private bool isFacingRight = true;
 
 
@@ -22,13 +22,16 @@ public class Player : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private LayerMask _obstacklesLayer;
-
+    [SerializeField] private LayerMask _enviromentLayer;
+    [SerializeField] private LayerMask _charactersLayer;
 
     private void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+
+        int dificulty = PlayerPrefs.GetInt("Difficulty");
+        Debug.Log("Difficulty is: " + dificulty);
     }
 
     // Update is called once per frame
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
     {
         if (!_knockbacked)
         {
+            //kazí to výbuch barelu, protože se automaticky p?emaže jeho knockback
             horizontal = Input.GetAxisRaw("Horizontal");
             _rigidbody2D.velocity = new Vector2(horizontal * speed, _rigidbody2D.velocity.y);
 
@@ -75,7 +79,7 @@ public class Player : MonoBehaviour
     private bool IsGrounded()
     {
         var grounded = false;
-        if (Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _groundLayer) || Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _obstacklesLayer)) grounded = true;
+        if (Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _groundLayer) || Physics2D.OverlapCircle(_groundCheck.position, 0.2f, _enviromentLayer) ) grounded = true;
         return grounded;
     }
 
