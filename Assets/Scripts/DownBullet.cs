@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DownBullet : MonoBehaviour
+{
+    private Rigidbody2D rb;
+    private Basic_Weapon basic_Weapon;
+    void Start()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        basic_Weapon = player.GetComponent<Basic_Weapon>();
+
+
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = -transform.up * basic_Weapon.bulletSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log(collision.name);
+        WalkingEnemy walkingEnemy = collision.GetComponent<WalkingEnemy>();
+        if (walkingEnemy != null)
+        {
+            walkingEnemy.TakeDamage(basic_Weapon.bulletDMG);
+        }
+        FlyingEnemy flyingEnemy = collision.GetComponent<FlyingEnemy>();
+        if (flyingEnemy != null)
+        {
+            flyingEnemy.TakeDamage(basic_Weapon.bulletDMG);
+        }
+        PykeEnemy pykeEnemy = collision.GetComponent<PykeEnemy>();
+        if (pykeEnemy != null)
+        {
+            pykeEnemy.TakeDamage(basic_Weapon.bulletDMG);
+        }
+        Destroy(gameObject);
+    }
+}
