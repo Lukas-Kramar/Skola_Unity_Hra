@@ -32,6 +32,11 @@ public class FlyingEnemy : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _rigidbody2 = GetComponent<Rigidbody2D>();
+
+        int dificulty = PlayerPrefs.GetInt("Difficulty");
+        if (dificulty == 1) health = health * 2;
+        if (dificulty == 2) health = health * 3;
+        if (dificulty == 3) health = health * 5;
     }
 
     private void FixedUpdate()

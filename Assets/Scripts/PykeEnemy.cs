@@ -23,6 +23,11 @@ public class PykeEnemy : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool("Walk", true);
         directionX = -1f;
+
+        int dificulty = PlayerPrefs.GetInt("Difficulty");
+        if (dificulty == 1) health = health * 2;
+        if (dificulty == 2) health = health * 3;
+        if (dificulty == 3) health = health * 5;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

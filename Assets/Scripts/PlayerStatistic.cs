@@ -10,7 +10,7 @@ public class PlayerStatistic : MonoBehaviour
     private int health;
 
     [SerializeField]
-    private int MaxShield = 100;    
+    private int MaxShield = 20;    
     private int shield;
 
     public int numberOfGrenades = 3;
@@ -20,14 +20,19 @@ public class PlayerStatistic : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {     
+        DeathScreen = GameObject.FindWithTag("DeathScreen");
+        DeathScreen.SetActive(false);
+
+        int dificulty = PlayerPrefs.GetInt("Difficulty");
+        if (dificulty == 1) MaxHealth = MaxHealth / 2; 
+        if (dificulty == 2) MaxHealth = MaxHealth / 4;
+        if (dificulty == 3) MaxHealth = MaxHealth / 6;
+
         health = MaxHealth;
         shield = MaxShield;
         healthShieldController.SetMaxHealth(health);
         healthShieldController.SetMaxShield(shield);
-
-        DeathScreen = GameObject.FindWithTag("DeathScreen");
-        DeathScreen.SetActive(false);
     }
 
     public void TakeDamage(int damage)

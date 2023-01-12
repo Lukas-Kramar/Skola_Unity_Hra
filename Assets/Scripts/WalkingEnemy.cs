@@ -24,6 +24,11 @@ public class WalkingEnemy : MonoBehaviour
     {
         _speedy = speed;
         _animator = GetComponent<Animator>();
+
+        int dificulty = PlayerPrefs.GetInt("Difficulty");
+        if (dificulty == 1) health = health * 2;
+        if (dificulty == 2) health = health * 3;
+        if (dificulty == 3) health = health * 5;
     }
 
     private void Update()
